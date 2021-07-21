@@ -7,7 +7,12 @@ import {
   BookRequiredProps,
 } from "src/app/shared/models";
 import { BooksService } from "src/app/shared/services";
-import { State, selectBooksEarningsTotals } from "src/app/shared/state";
+import {
+  State,
+  selectBooksEarningsTotals,
+  selectAllBooks,
+  selectActiveBook,
+} from "src/app/shared/state";
 import { BooksApiActions, BooksPageActions } from "../../actions";
 
 @Component({
@@ -16,11 +21,15 @@ import { BooksApiActions, BooksPageActions } from "../../actions";
   styleUrls: ["./books-page.component.css"],
 })
 export class BooksPageComponent implements OnInit {
-  books: BookModel[] = [];
-  currentBook: BookModel | null = null;
+  // books: BookModel[] = [];
+  books$: Observable<BookModel[]>;
+  // currentBook: BookModel | null = null;
+  activeBook$: Observable<BookModel | undefined | null>;
   total$: Observable<number>;
 
   constructor(private booksService: BooksService, private store: Store<State>) {
+    this.books$ = store.select(selectAllBooks);
+    this.activeBook$ = store.select(selectActiveBook);
     this.total$ = store.select(selectBooksEarningsTotals);
   }
 
@@ -35,13 +44,13 @@ export class BooksPageComponent implements OnInit {
     this.booksService.all().subscribe((books) => {
       this.store.dispatch(BooksApiActions.booksLoaded({ books: books }));
 
-      this.books = books;
+      // this.books = books;
     });
   }
 
   onSelect(book: BookModel) {
     this.store.dispatch(BooksPageActions.selectBook({ bookId: book.id }));
-    this.currentBook = book;
+    // this.currentBook = book;
   }
 
   onCancel() {
@@ -50,7 +59,7 @@ export class BooksPageComponent implements OnInit {
 
   removeSelectedBook() {
     this.store.dispatch(BooksPageActions.clearSelectedBook());
-    this.currentBook = null;
+    // this.currentBook = null;
   }
 
   onSave(book: BookRequiredProps | BookModel) {

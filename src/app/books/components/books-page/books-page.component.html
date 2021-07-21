@@ -3,7 +3,7 @@
     <app-books-total [total]="total$ | async"> </app-books-total>
 
     <app-books-list
-      [books]="books"
+      [books]="books$ | async"
       (select)="onSelect($event)"
       (delete)="onDelete($event)"
     >
@@ -12,9 +12,10 @@
 
   <app-book-detail
     class="col-50"
-    [book]="currentBook"
+    [book]="activeBook$ | async"
     (save)="onSave($event)"
     (cancel)="onCancel()"
   >
   </app-book-detail>
+  Active Book: {{ activeBook$ | async }}
 </div>
