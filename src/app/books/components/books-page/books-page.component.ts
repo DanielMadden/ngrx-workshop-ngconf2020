@@ -35,17 +35,7 @@ export class BooksPageComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(BooksPageActions.enter());
-
-    this.getBooks();
     this.removeSelectedBook();
-  }
-
-  getBooks() {
-    this.booksService.all().subscribe((books) => {
-      this.store.dispatch(BooksApiActions.booksLoaded({ books: books }));
-
-      // this.books = books;
-    });
   }
 
   onSelect(book: BookModel) {
@@ -75,7 +65,6 @@ export class BooksPageComponent implements OnInit {
 
     this.booksService.create(bookProps).subscribe((book) => {
       this.store.dispatch(BooksApiActions.bookCreated({ book: book }));
-      this.getBooks();
       this.removeSelectedBook();
     });
   }
@@ -87,7 +76,6 @@ export class BooksPageComponent implements OnInit {
 
     this.booksService.update(book.id, book).subscribe((book) => {
       this.store.dispatch(BooksApiActions.bookUpdated({ book: book }));
-      this.getBooks();
       this.removeSelectedBook();
     });
   }
@@ -97,7 +85,6 @@ export class BooksPageComponent implements OnInit {
 
     this.booksService.delete(book.id).subscribe(() => {
       this.store.dispatch(BooksApiActions.bookDeleted({ bookId: book.id }));
-      this.getBooks();
       this.removeSelectedBook();
     });
   }
