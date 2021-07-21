@@ -35,7 +35,7 @@ export const booksReducer = createReducer(
   on(BooksPageActions.selectBook, (state, action) => {
     return {
       ...state,
-      activeBookid: action.bookId,
+      activeBookId: action.bookId,
     };
   }),
   on(BooksApiActions.booksLoaded, (state, action) => {
