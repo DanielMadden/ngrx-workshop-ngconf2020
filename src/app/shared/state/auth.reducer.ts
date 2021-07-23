@@ -36,3 +36,7 @@ export const authReducer = createReducer(
 export function reducer(state: undefined | State, action: Action) {
   return authReducer(state, action);
 }
+
+export const selectStatus = (state: State) => state.gettingStatus;
+export const selectUser = (state: State) => state.user;
+export const selectError = (state: State) => state.error;
