@@ -8,15 +8,17 @@ import { AuthUserActions } from "../../actions";
 @Component({
   selector: "app-user",
   templateUrl: "./user.component.html",
-  styleUrls: ["./user.component.css"]
+  styleUrls: ["./user.component.css"],
 })
 export class UserComponent {
   user$: Observable<UserModel | null> = of({
     id: "1",
-    username: "NgRx Learner"
+    username: "NgRx Learner",
   });
 
+  constructor(private store: Store) {}
+
   onLogout() {
-    // Not Implemented
+    this.store.dispatch(AuthUserActions.logout());
   }
 }
