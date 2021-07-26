@@ -33,6 +33,26 @@ export const authReducer = createReducer(
       },
       error: "",
     };
+  }),
+  on(AuthApiActions.getStatusSuccess, (state, action) => {
+    return {
+      ...state,
+      user: action.user,
+    };
+  }),
+  on(AuthApiActions.loginSuccess, (state, action) => {
+    return {
+      ...state,
+      gettingStatus: false,
+      user: action.user,
+    };
+  }),
+  on(AuthApiActions.loginFailure, (state, action) => {
+    return {
+      gettingStatus: false,
+      user: null,
+      error: action.error,
+    };
   })
 );
 
