@@ -5,7 +5,7 @@ import { LoginEvent } from "src/app/auth/components/login-form";
 
 export interface State {
   gettingStatus: boolean;
-  user: LoginEvent | null;
+  user: UserModel | null;
   error: string;
 }
 
@@ -27,7 +27,10 @@ export const authReducer = createReducer(
   on(AuthUserActions.login, (state, action) => {
     return {
       gettingStatus: true,
-      user: action.account,
+      user: {
+        username: action.account.username,
+        id: "",
+      },
       error: "",
     };
   })
